@@ -6,8 +6,8 @@ class CVAE(torch.nn.Module):
     def __init__(self, input_size=420):
         super().__init__()
 
-        encoder_layer_sizes = [390, 200, 100, 30]
-        decoder_layer_sizes = [60, 100, 200, 390]
+        encoder_layer_sizes = [390, 256, 128, 16]
+        decoder_layer_sizes = [46, 128, 256, 390]
 
         # Encoder, leaky relu, mabye embbeding layeri prikliuot, 
         self.encoder = nn.Sequential(
