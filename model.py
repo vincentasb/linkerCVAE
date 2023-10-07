@@ -20,7 +20,6 @@ class CVAE(torch.nn.Module):
             nn.Linear(encoder_layer_sizes[1], encoder_layer_sizes[2]),
             nn.BatchNorm1d(encoder_layer_sizes[2]),
             nn.LeakyReLU(0.01),
-            nn.Linear(encoder_layer_sizes[2], encoder_layer_sizes[3])
         )
 
         # Decoder
@@ -37,6 +36,8 @@ class CVAE(torch.nn.Module):
             nn.Linear(decoder_layer_sizes[3], 390),
             nn.Sigmoid()
         )
+        self.mu = nn.Linear(encoder_layer_sizes[2], encoder_layer_sizes[3])
+        self.sig = nn.Linear(encoder_layer_sizes[2], encoder_layer_sizes[3])
 
     def reparametrize(self, mu, log_var):
         eps = torch.randn_like(log_var)
@@ -46,8 +47,8 @@ class CVAE(torch.nn.Module):
         x = torch.cat((x, c), dim=1)
         #print(x.shape, c.shape)
         encoder_out = self.encoder(x)
-        mu = encoder_out
-        log_var = F.softplus(encoder_out)
+        mu = self.mu(encoder_out)
+        log_var = F.softplus(self.sig(encoder_out))
         sample = self.reparametrize(mu, log_var)
         #print(sample.shape)
         sample = torch.cat((sample, c), 1)
