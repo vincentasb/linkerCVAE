@@ -1,5 +1,5 @@
 import csv
-
+#Script for slicing full training data into chunks for debugging
 def slice_csv(input_file, output_file, limit=10000):
     with open(input_file, 'r') as infile, open(output_file, 'w', newline='') as outfile:
         reader = csv.reader(infile)
