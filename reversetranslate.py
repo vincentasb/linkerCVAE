@@ -40,8 +40,3 @@ def reverse_translate(aa_sequence):
                 dna_sequence += codon
                 break
     return dna_sequence
-
-# Test the function
-aa_sequence = "VEPKDIPISESKQASAKIAITKGGGGASNA"  # Example amino acid sequence
-dna_seq = reverse_translate(aa_sequence)
-print(dna_seq)
